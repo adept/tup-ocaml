@@ -1,0 +1,15 @@
+TOP=$(TUP_CWD)
+LIBDIR=$(TOP)/lib
+OCAMLC_FLAGS=
+
+# Byte-compile preprocessor extension
+!byte_pp = |> ocamlc -I +camlp4 -I $(LIBDIR) $(OCAMLC_FLAGS) -pp camlp4orf -c %f -o %o |>
+
+# Byte-compile interface (.mli -> .cmi)
+!byte_i  = |> ocamlc -I +camlp4 -I $(LIBDIR) $(OCAMLC_FLAGS) -c %f -o %o |> %B.cmi
+
+# Byte-compile object file, when interface was compiled separately (.ml -> .cmo, .mli is present)
+!byte_o  = |> ocamlc -I +camlp4 -I $(LIBDIR) $(OCAMLC_FLAGS) -c %f -o %o |> %B.cmo
+
+# Byte-compile object file, when interface was compiled separately (.ml -> .cmo, .cmi, no .mli)
+!byte_io  = |> ocamlc -I +camlp4 -I $(LIBDIR) $(OCAMLC_FLAGS) -c %f -o %o |> %B.cmo | %B.cmi

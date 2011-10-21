@@ -1,0 +1,3 @@
+include_rules
+: pa_sexp_conv.mli                                               |> !byte_pp |> pa_sexp_conv.cmi
+: pa_sexp_conv.ml | $(LIBDIR)/pa_type_conv.cmi pa_sexp_conv.cmi |> !byte_pp |> pa_sexp_conv.cmo

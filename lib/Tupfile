@@ -1,0 +1,8 @@
+include_rules
+
+# "Install" preprocessor extensions to local search path
+: $(TOP)/type-conv/lib/pa_type_conv.cmi |> cp %f %o |> pa_type_conv.cmi
+: $(TOP)/type-conv/lib/pa_type_conv.cmo |> cp %f %o |> pa_type_conv.cmo
+# Those cause circular dependecy - why?
+#: $(TOP)/sexplib/syntax/pa_sexp_conv.cmi |> cp %f %o |> pa_sexp_conv.cmi
+#: $(TOP)/sexplib/syntax/pa_sexp_conv.cmo |> cp %f %o |> pa_sexp_conv.cmo

@@ -1,0 +1,6 @@
+*.cmi
+*.cmo
+*.cma
+/sexplib/lib/lexer.ml
+/sexplib/lib/parser.ml
+/sexplib/lib/parser.mli
