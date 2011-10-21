@@ -1,0 +1,26 @@
+# OASIS_START
+# DO NOT EDIT (digest: 0054ad2f1cb00d389a5f9b2d6ddbef77)
+version = "7.0.2"
+description = "automated S-expression conversion"
+requires = "unix bigarray num"
+archive(byte) = "sexplib.cma"
+archive(native) = "sexplib.cmxa"
+exists_if = "sexplib.cma"
+package "syntax" (
+ version = "7.0.2"
+ description = "Syntax extension for Sexplib"
+ requires = "camlp4 type-conv sexplib"
+ archive(syntax,preprocessor) = "pa_sexp_conv.cma"
+ archive(syntax,toploop) = "pa_sexp_conv.cma"
+ exists_if = "pa_sexp_conv.cma"
+)
+# OASIS_STOP
+
+package "top" (
+ version = "6.1.1"
+ description = "automated S-expression conversion"
+ requires = "sexplib"
+ archive(byte) = "sexplib_top.cma"
+ archive(native) = "sexplib_top.cmxa"
+ exists_if = "sexplib_top.cma"
+)

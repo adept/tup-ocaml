@@ -1,0 +1,9 @@
+# OASIS_START
+# DO NOT EDIT (digest: eea5ecc3d3830dfcb9960873dd7ed6ed)
+# Library pa_type_conv
+"lib": include
+<lib/*.ml{,i}>: pkg_camlp4.quotations
+<lib/*.ml{,i}>: pkg_camlp4.lib
+<lib/*.ml{,i}>: pkg_camlp4.extend
+# OASIS_STOP
+<lib/pa_type_conv.ml>: syntax_camlp4o
