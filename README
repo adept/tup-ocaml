@@ -1,1 +1,7 @@
-Both sexplib and type-conv have their own build scripts, I would not be removing them, but I would not be using them either
+Both sexplib and type-conv have their own build scripts, I would not be removing them, but I would not be using them either.
+
+Run tup upd, then run foobar/foobar and compare the output to this:
+
+$ ./foobar/foobar
+foo=((a 1)(b foo))
+bar=((a 2)(b bar))
