@@ -5,6 +5,9 @@ include_rules
 : foreach *.mly |> ocamlyacc %f |> %B.ml %B.mli
 
 # Building library modules
+# Note that rules are very similar, differ in order-defining deps only, and all order-defining deps are created by rules within this directory
+# It would be nice to be able to specify some kind of "foreach" rule that captures general compilation command and then specify order-defining
+# dependencies separately
 : type.ml    |> !byte_io |> {cmo}
 
 : parser.mli | type.cmi |> !byte_i |>
@@ -12,7 +15,7 @@ include_rules
 
 : lexer.ml | parser.cmi |> !byte_io |> {cmo}
 
-# It would be nice to avoid such manual management of flags
+# It would be nice to avoid such manual management of flags and be able to set flags for one specific command only
 OCAMLC_FLAGS_BAK = $(OCAMLC_FLAGS)
 OCAMLC_FLAGS += -pp cpp
 : pre_sexp.ml | lexer.cmi |> !byte_io |> {cmo}
