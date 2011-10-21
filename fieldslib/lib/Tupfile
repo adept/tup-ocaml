@@ -1,0 +1,11 @@
+include_rules
+
+# Building library modules
+: field.mli |> !byte_i |>
+: field.ml | field.cmi |> !byte_o |> {cmo}
+
+# Producing library
+: {cmo} |> ocamlc -pack %f -o %o |> fieldslib.cmo | fieldslib.cmi
+: fieldslib.cmo  |> ocamlc -a %f -o %o |> fieldslib.cma
+
+# Now i want to install fieldlib.cma to $(LIBDIR)/fieldlib/fieldlib.cma but dont know how

@@ -17,7 +17,7 @@ include_rules
 
 # It would be nice to avoid such manual management of flags and be able to set flags for one specific command only
 OCAMLC_FLAGS_BAK = $(OCAMLC_FLAGS)
-OCAMLC_FLAGS += -pp cpp
+OCAMLC_FLAGS += -pp 'cpp -traditional -undef'
 : pre_sexp.ml | lexer.cmi |> !byte_io |> {cmo}
 OCAMLC_FLAGS = $(OCAMLC_FLAGS_BAK)
 
@@ -39,6 +39,7 @@ OCAMLC_FLAGS = $(OCAMLC_FLAGS_BAK)
 
 : std.ml | conv.cmi |> !byte_io |> {cmo}
 
-: {cmo} |> ocamlc -a -o %o %f |> sexplib.cma
+: {cmo} | conv_error.cmi std.cmi |> ocamlc -pack %f -o %o |> sexplib.cmo | sexplib.cmi
+: sexplib.cmo |> ocamlc -a %f -o %o |> sexplib.cma
 
 # Now I would like to "install" .cma to $(LIBDIR)/sexplib/sexplib.cma, but apparently I can't create sexplib subdir on the fly :(

@@ -1,0 +1,18 @@
+include_rules
+
+# Sample binary that uses sexplib and fieldslib
+
+# I'd rather have syntax extension installed to LIBDIR, but can't do that due to circular deps(?!) which I think not really there
+OCAMLC_FLAGS += -pp 'camlp4o -I $(LIBDIR) -I $(TOP)/sexplib/syntax -I $(TOP)/fieldslib/syntax pa_type_conv.cmo pa_sexp_conv.cmo pa_fields_conv.cmo'
+
+# I'd rather install my libraries (.cma) in subdirectories under LIBDIR, but I dont know how. Until then, I'll reference them via search path
+SEXP=$(TOP)/sexplib/lib
+FLDS=$(TOP)/fieldslib/lib
+OCAMLC_FLAGS += -I $(SEXP) -I $(FLDS)
+
+# Compile binary
+: foobar.ml | $(TOP)/sexplib/syntax/pa_sexp_conv.cmo $(LIBDIR)/pa_type_conv.cmo $(TOP)/fieldslib/syntax/pa_fields_conv.cmo $(FLDS)/fieldslib.cm* $(SEXP)/sexplib.cm* |> !byte_io |> foobar.cmo
+
+# Link binary
+OCAMLC_FLAGS =
+: $(SEXP)/sexplib.cma $(FLDS)/fieldslib.cma foobar.cmo |> ocamlc -o %o /usr/lib/ocaml/bigarray.cma /usr/lib/ocaml/unix.cma /usr/lib/ocaml/nums.cma %f |> foobar

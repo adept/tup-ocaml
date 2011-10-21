@@ -6,3 +6,5 @@ include_rules
 # Those cause circular dependecy - why?
 #: $(TOP)/sexplib/syntax/pa_sexp_conv.cmi |> cp %f %o |> pa_sexp_conv.cmi
 #: $(TOP)/sexplib/syntax/pa_sexp_conv.cmo |> cp %f %o |> pa_sexp_conv.cmo
+#: $(TOP)/fieldslib/syntax/pa_fields_conv.cmi |> cp %f %o |> pa_fields_conv.cmi
+#: $(TOP)/fieldslib/syntax/pa_fields_conv.cmo |> cp %f %o |> pa_fields_conv.cmo
