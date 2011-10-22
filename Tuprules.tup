@@ -13,3 +13,7 @@ OCAMLC_FLAGS=
 
 # Byte-compile object file, when interface was compiled separately (.ml -> .cmo, .cmi, no .mli)
 !byte_io  = |> ocamlc -I +camlp4 -I $(LIBDIR) $(OCAMLC_FLAGS) -c %f -o %o |> %B.cmo | %B.cmi
+
+# Use ocamlbuild for building
+
+!ob = |> ocamlbuild -no-hygiene -no-log -pp $(OB_PP) -cflags $(OB_CF) %o && cp _build/%o . && rm -rf _build/* |>

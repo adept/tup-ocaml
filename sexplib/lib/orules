@@ -1,0 +1,38 @@
+#!/bin/bash
+echo ": foreach *.mll |> ocamllex -q %f |> %B.ml"
+echo ": foreach *.mly |> ocamlyacc %f |> %B.ml %B.mli"
+
+fs=$(ocamldsort -d 'ocamldep -pp "cpp -traditional -undef"' -mli *.ml *.mli)
+so_far=""
+for f in ${fs[@]} ; do 
+  dst=""
+  c=""
+  bin=""
+  if [ "${f%%.ml}" != "${f}" ] ; then
+     dst="${f%%.ml}.cmo"
+     if [ -e "${f%%.ml}.mli" ] ; then
+        c='!byte_o'
+        bin="{cmos}"
+     else
+        c='!byte_io'
+        dst="$dst ${f%%.ml}.cmi"
+        bin="{cmos}"
+     fi
+  else
+     dst="${f%%.mli}.cmi"
+     c='!byte_i'
+  fi
+
+  echo ": $f $so_far |> $c |> $bin"
+
+  if [ -z "$so_far" ] ; then
+    so_far="| $dst"
+  else
+    so_far="$so_far $dst"
+  fi
+done
+
+cmos=$(ocamldsort -d 'ocamldep -pp "cpp -traditional -undef"' -byte *.ml)
+
+echo ": $cmos | *.cmi |> ocamlc -pack %f -o %o |> sexplib.cmo | sexplib.cmi"
+echo ": sexplib.cmo |> ocamlc -a %f -o %o |> sexplib.cma"
