@@ -1,3 +1,0 @@
-include_rules
-
-: ocamake.ml |> ocamlopt -I /usr/lib/ocaml unix.cmxa str.cmxa -o %o |> ocamake
