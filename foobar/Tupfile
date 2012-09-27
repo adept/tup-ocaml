@@ -15,4 +15,4 @@ OCAMLC_FLAGS += -I $(SEXP) -I $(FLDS)
 
 # Link binary
 OCAMLC_FLAGS =
-: $(SEXP)/sexplib.cma $(FLDS)/fieldslib.cma foobar.cmo |> ocamlc -o %o /usr/lib/ocaml/bigarray.cma /usr/lib/ocaml/unix.cma /usr/lib/ocaml/nums.cma %f |> foobar
+: $(SEXP)/sexplib.cma $(FLDS)/fieldslib.cma foobar.cmo |> ocamlc -o %o bigarray.cma unix.cma nums.cma %f |> foobar
